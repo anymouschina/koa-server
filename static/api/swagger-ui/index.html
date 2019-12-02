@@ -39,7 +39,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "swagger.json",
+        urls: [{name:"君莫笑的koa测试",url:'swagger.json'}],
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

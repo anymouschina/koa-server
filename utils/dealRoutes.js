@@ -18,17 +18,17 @@ module.exports = (router,routes,config)=>{
     let swaggerObj = {
         "swagger": "2.0",
         "info": {
-            "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+            "description": "基于swagger-ui搭建的可用于koa的swagger,部分功能待完善",
             "version": "1.0.3",
-            "title": "Swagger Petstore",
-            "termsOfService": "http://swagger.io/terms/",
-            "contact": {
-                "email": "apiteam@swagger.io"
-            },
-            "license": {
-                "name": "Apache 2.0",
-                "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-            }
+            "title": "Swagger 君莫笑",
+            // "termsOfService": "http://swagger.io/terms/",
+            // "contact": {
+            //     "email": "apiteam@swagger.io"
+            // },
+            // "license": {
+            //     "name": "Apache 2.0",
+            //     "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            // }
         },
         "host": config.host,
         "basePath": "/api",
@@ -36,10 +36,10 @@ module.exports = (router,routes,config)=>{
             "https",
             "http"
         ],
-        "externalDocs": {
-            "description": "Find out more about Swagger",
-            "url": "http://swagger.io"
-        },
+        // "externalDocs": {
+        //     "description": "Find out more about Swagger",
+        //     "url": "http://swagger.io"
+        // },
         "securityDefinitions": {
             "api_key": {
                 "type": "apiKey",
@@ -101,7 +101,7 @@ module.exports = (router,routes,config)=>{
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "$ref": "#/definitions/Pet"
+                            "$ref": "#/definitions/ApiResponse"
                         }
                     },
                     "400": {
@@ -118,10 +118,10 @@ module.exports = (router,routes,config)=>{
         return {
             "name": item,
             "description": `Everything about ${item}`,
-            "externalDocs": {
-                "description": "Find out more",
-                "url": "http://swagger.io"
-            }
+            // "externalDocs": {
+            //     "description": "Find out more",
+            //     "url": "http://swagger.io"
+            // }
         }
     })
     fs.writeFileSync('static/api/swagger-ui/swagger.json',JSON.stringify(swaggerObj),(err)=>{

@@ -19,6 +19,7 @@
   "dependencies": {
     "joi": "^14.3.1",
     "koa": "^2.11.0",
+    "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
     "mongoose": "^5.7.13",
     "swagger2-koa": "^2.0.0"
