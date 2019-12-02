@@ -6,9 +6,6 @@ module.exports = [
 		method: 'GET',
 		path: `/${GROUP_NAME}/test1`,
 		handler: (ctx, next) => {
-			console.log(ctx.request);
-			console.log(ctx.request.querystring);
-			console.log(ctx.response.header);
 			ctx.body = {
 				status: 200,
 				message: '111',
