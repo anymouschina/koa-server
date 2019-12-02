@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/anymouschina/koa-server#readme",
   "dependencies": {
+    "eslint": "^6.7.2",
     "joi": "^14.3.1",
     "koa": "^2.11.0",
     "koa-router": "^7.4.0",
