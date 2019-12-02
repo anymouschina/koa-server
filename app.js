@@ -12,6 +12,6 @@ const init = ()=>{
     app.use(koaStatic('static'));//暴露swagger
     app.use(cors());//允许跨域
     app.listen(config.port);//启动服务
-    // console.log(router)
+    console.log('server is listenning 3000.....')
 }
 init();

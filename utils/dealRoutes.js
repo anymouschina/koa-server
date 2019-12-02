@@ -40,6 +40,22 @@ module.exports = (router,routes,config)=>{
             "description": "Find out more about Swagger",
             "url": "http://swagger.io"
         },
+        "securityDefinitions": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "api_key",
+                "in": "header"
+            },
+            "petstore_auth": {
+                "type": "oauth2",
+                "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+                "flow": "implicit",
+                "scopes": {
+                    "read:pets": "read your pets",
+                    "write:pets": "modify pets in your account"
+                }
+            }
+        },
         "definitions": {
             "ApiResponse": {
                 "type": "object",
@@ -50,9 +66,6 @@ module.exports = (router,routes,config)=>{
                     },
                     "type": {
                         "type": "string"
-                    },
-                    "data": {
-                        "type": "object"
                     },
                     "message": {
                         "type": "string"
@@ -71,10 +84,13 @@ module.exports = (router,routes,config)=>{
         if(this.toString.call(produces)!=='[object Array]')produces = []
         let parameters = [
             ...mapObj(validate.query,"query"),
-            ...mapObj(validate.payload,"payload")]
+            ...mapObj(validate.payload,"body")]
         swaggerObj.paths[item.path] = {
-            [item.method.toLowerCase()]:{tags:[item.config.tags[1]]},
-            summary,description,operationId,
+            [item.method.toLowerCase()]:{
+                tags:[item.config.tags[1]],
+                summary,
+                description,
+                operationId,
                 "produces": [
                     "application/json",
                     "application/xml",
@@ -84,27 +100,28 @@ module.exports = (router,routes,config)=>{
                 "responses": {
                     "200": {
                         "description": "successful operation",
-                        "schema": { 
-                            "$ref": "#/definitions/ApiResponse"
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
                         }
                     },
                     "400": {
-                        "description": "params is not accept"
+                        "description": "Invalid ID supplied"
                     },
                     "404": {
-                        "description": "not found"
+                        "description": "Pet not found"
                     }
                 }
+            }
         }
     })
     swaggerObj.tags = tags.map(item=>{
         return {
             "name": item,
             "description": `Everything about ${item}`,
-            // "externalDocs": {
-            //     "description": "Find out more",
-            //     "url": "http://swagger.io"
-            // }
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
         }
     })
     fs.writeFileSync('static/api/swagger-ui/swagger.json',JSON.stringify(swaggerObj),(err)=>{
