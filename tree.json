@@ -1,0 +1,21 @@
+{
+    "title": "JSON在线解析",
+    "json.url": "https://qqe2.com/jsontool/analysis",
+    "keywords": "json在线解析",
+    "功能": [
+        "JSON美化",
+        "JSON数据类型显示",
+        "JSON数组显示角标",
+        "高亮显示",
+        "错误提示",
+        {
+            "备注": [
+                "www.qqe2.com",
+                "89tool.com"
+            ]
+        }
+    ],
+    "联系我们": {
+        "QQ": "20607761"
+    }
+}

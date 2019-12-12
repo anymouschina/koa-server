@@ -32,7 +32,8 @@ module.exports = (router, routes, config) => {
 		},
 		host: config.host,
 		basePath: '/api',
-		schemes: ['https', 'http'],
+		schemes: ['http','https'],
+		// schemes: ['https', 'http'],
 		externalDocs: {
 			description: 'Find out more about Swagger',
 			url: 'http://swagger.io'
@@ -74,14 +75,16 @@ module.exports = (router, routes, config) => {
 		paths: {}
 	};
 	const tags = [];
+	console.log(routes,'!!!')
 	routes.map(item => {
 		router[item.method.toLowerCase()]('/api' + item.path, item.handler);
 		swaggerObj.tags.indexOf(item.config.tags[1]) === -1 && tags.push(item.config.tags[1]);
 		let { summary, description, operationId, produces, validate } = item.config;
 		if (this.toString.call(produces) !== '[object Array]') produces = [];
-		const parameters = [...mapObj(validate.query, 'query'), ...mapObj(validate.payload, 'body')];
-		swaggerObj.paths[item.path] = {
-			[item.method.toLowerCase()]: {
+		const parameters = [...(()=>{return validate&&validate.query?mapObj(validate.query, 'query'):[]})(),...(()=>{return validate&&validate.payload?mapObj(validate.payload, 'body'):[]})()];
+		!swaggerObj.paths[item.path]&&(swaggerObj.paths[item.path] = Object.create(null))
+		swaggerObj.paths[item.path][item.method.toLowerCase()]=
+			 {
 				tags: [item.config.tags[1]],
 				summary,
 				description,
@@ -92,7 +95,7 @@ module.exports = (router, routes, config) => {
 					200: {
 						description: 'successful operation',
 						schema: {
-							$ref: '#/definitions/Pet'
+							$ref: '#/definitions/ApiResponse'
 						}
 					},
 					400: {
@@ -103,7 +106,6 @@ module.exports = (router, routes, config) => {
 					}
 				}
 			}
-		};
 	});
 	swaggerObj.tags = tags.map(item => {
 		return {

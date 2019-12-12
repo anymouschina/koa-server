@@ -12,14 +12,6 @@ const config = {
 		underscored: true
 	}
 };
-console.log(config);
-mongoose.connect('mongodb://localhost:27017/junmoxiao');
-const con = mongoose.connection;
-con.on('error', console.error.bind(console, '连接数据库失败'));
-con.once('open', () => {
-	// 成功连接
-	console.log('连接成功');
-});
 const db = {};
 fs.readdirSync(__dirname)
 	.filter(file => {
@@ -33,5 +25,14 @@ fs.readdirSync(__dirname)
 	});
 
 db.mongoose = mongoose;
-
+db.register = function (){
+	console.log(config);
+	mongoose.connect('mongodb://localhost:27017/junmoxiao');
+	const con = mongoose.connection;
+	con.on('error', console.error.bind(console, '连接数据库失败'));
+	con.once('open', () => {
+		// 成功连接
+		console.log('连接成功');
+	});
+}
 module.exports = db;
